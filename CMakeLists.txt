@@ -10,4 +10,8 @@ else()
     message(WARNING "The file conanbuildinfo.cmake doesn't exist, you have to run conan install first")
 endif()
 
+set(CMAKE_VERBOSE_MAKEFILE ON)
+
 add_executable(mudpp main.cpp app.cpp app.h net.cpp net.h)
+#target_link_libraries(mudpp ${CONAN_LIBS})
+conan_target_link_libraries(mudpp)

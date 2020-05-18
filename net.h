@@ -5,7 +5,7 @@
 #ifndef MUDPP_NET_H
 #define MUDPP_NET_H
 
-#include "Poco/Util/Subsystem.h"
+#include <Poco/Util/Subsystem.h>
 
 class NetworkSubsystem : public Poco::Util::Subsystem {
 public:
