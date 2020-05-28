@@ -33,13 +33,13 @@ endmacro()
 #################
 ###  POCO
 #################
-set(CONAN_POCO_ROOT "/home/volund/.conan/data/poco/1.10.1/_/_/package/718e3034625b2f7f860369aeddd15f4be5aee71e")
-set(CONAN_INCLUDE_DIRS_POCO "/home/volund/.conan/data/poco/1.10.1/_/_/package/718e3034625b2f7f860369aeddd15f4be5aee71e/include")
-set(CONAN_LIB_DIRS_POCO "/home/volund/.conan/data/poco/1.10.1/_/_/package/718e3034625b2f7f860369aeddd15f4be5aee71e/lib")
+set(CONAN_POCO_ROOT "/home/volund/.conan/data/poco/1.10.1/_/_/package/e69413742ba54b4ea95d3337b7049d53c44cc4df")
+set(CONAN_INCLUDE_DIRS_POCO "/home/volund/.conan/data/poco/1.10.1/_/_/package/e69413742ba54b4ea95d3337b7049d53c44cc4df/include")
+set(CONAN_LIB_DIRS_POCO "/home/volund/.conan/data/poco/1.10.1/_/_/package/e69413742ba54b4ea95d3337b7049d53c44cc4df/lib")
 set(CONAN_BIN_DIRS_POCO )
 set(CONAN_RES_DIRS_POCO )
 set(CONAN_SRC_DIRS_POCO )
-set(CONAN_BUILD_DIRS_POCO "/home/volund/.conan/data/poco/1.10.1/_/_/package/718e3034625b2f7f860369aeddd15f4be5aee71e/")
+set(CONAN_BUILD_DIRS_POCO "/home/volund/.conan/data/poco/1.10.1/_/_/package/e69413742ba54b4ea95d3337b7049d53c44cc4df/")
 set(CONAN_FRAMEWORK_DIRS_POCO )
 set(CONAN_LIBS_POCO PocoZip PocoNetSSL PocoJWT PocoUtil PocoDataSQLite PocoRedis PocoMongoDB PocoNet PocoEncodings PocoXML PocoData PocoCrypto PocoJSON PocoFoundation)
 set(CONAN_PKG_LIBS_POCO PocoZip PocoNetSSL PocoJWT PocoUtil PocoDataSQLite PocoRedis PocoMongoDB PocoNet PocoEncodings PocoXML PocoData PocoCrypto PocoJSON PocoFoundation)
@@ -115,7 +115,7 @@ set(CONAN_SETTINGS_ARCH "x86_64")
 set(CONAN_SETTINGS_ARCH_BUILD "x86_64")
 set(CONAN_SETTINGS_BUILD_TYPE "Release")
 set(CONAN_SETTINGS_COMPILER "gcc")
-set(CONAN_SETTINGS_COMPILER_LIBCXX "libstdc++")
+set(CONAN_SETTINGS_COMPILER_LIBCXX "libstdc++11")
 set(CONAN_SETTINGS_COMPILER_VERSION "9")
 set(CONAN_SETTINGS_OS "Linux")
 set(CONAN_SETTINGS_OS_BUILD "Linux")
@@ -128,9 +128,9 @@ set(CONAN_CMD_SHARED_LINKER_FLAGS ${CONAN_SHARED_LINKER_FLAGS})
 set(CONAN_CMD_C_FLAGS ${CONAN_C_FLAGS})
 # Defining accumulated conan variables for all deps
 
-set(CONAN_INCLUDE_DIRS "/home/volund/.conan/data/poco/1.10.1/_/_/package/718e3034625b2f7f860369aeddd15f4be5aee71e/include"
+set(CONAN_INCLUDE_DIRS "/home/volund/.conan/data/poco/1.10.1/_/_/package/e69413742ba54b4ea95d3337b7049d53c44cc4df/include"
 			"/home/volund/.conan/data/openssl/1.1.1g/_/_/package/6af9cc7cb931c5ad942174fd7838eb655717c709/include" ${CONAN_INCLUDE_DIRS})
-set(CONAN_LIB_DIRS "/home/volund/.conan/data/poco/1.10.1/_/_/package/718e3034625b2f7f860369aeddd15f4be5aee71e/lib"
+set(CONAN_LIB_DIRS "/home/volund/.conan/data/poco/1.10.1/_/_/package/e69413742ba54b4ea95d3337b7049d53c44cc4df/lib"
 			"/home/volund/.conan/data/openssl/1.1.1g/_/_/package/6af9cc7cb931c5ad942174fd7838eb655717c709/lib" ${CONAN_LIB_DIRS})
 set(CONAN_BIN_DIRS "/home/volund/.conan/data/openssl/1.1.1g/_/_/package/6af9cc7cb931c5ad942174fd7838eb655717c709/bin" ${CONAN_BIN_DIRS})
 set(CONAN_RES_DIRS  ${CONAN_RES_DIRS})
@@ -142,7 +142,7 @@ set(CONAN_FRAMEWORKS  ${CONAN_FRAMEWORKS})
 set(CONAN_FRAMEWORKS_FOUND "")  # Will be filled later
 set(CONAN_DEFINES "-DPOCO_STATIC=ON" ${CONAN_DEFINES})
 set(CONAN_BUILD_MODULES_PATHS  ${CONAN_BUILD_MODULES_PATHS})
-set(CONAN_CMAKE_MODULE_PATH "/home/volund/.conan/data/poco/1.10.1/_/_/package/718e3034625b2f7f860369aeddd15f4be5aee71e/"
+set(CONAN_CMAKE_MODULE_PATH "/home/volund/.conan/data/poco/1.10.1/_/_/package/e69413742ba54b4ea95d3337b7049d53c44cc4df/"
 			"/home/volund/.conan/data/openssl/1.1.1g/_/_/package/6af9cc7cb931c5ad942174fd7838eb655717c709/" ${CONAN_CMAKE_MODULE_PATH})
 
 set(CONAN_CXX_FLAGS " ${CONAN_CXX_FLAGS}")

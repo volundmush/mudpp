@@ -1,5 +1,5 @@
 {
- "profile_host": "[settings]\narch=x86_64\narch_build=x86_64\nbuild_type=Release\ncompiler=gcc\ncompiler.libcxx=libstdc++\ncompiler.version=9\nos=Linux\nos_build=Linux\n[options]\n[build_requires]\n[env]\n",
+ "profile_host": "[settings]\narch=x86_64\narch_build=x86_64\nbuild_type=Release\ncompiler=gcc\ncompiler.libcxx=libstdc++11\ncompiler.version=9\nos=Linux\nos_build=Linux\n[options]\n[build_requires]\n[env]\n",
  "graph_lock": {
   "nodes": {
    "0": {
@@ -11,7 +11,7 @@
     "path": "/home/volund/CLionProjects/mudpp/conanfile.txt"
    },
    "1": {
-    "pref": "poco/1.10.1#0:718e3034625b2f7f860369aeddd15f4be5aee71e#0",
+    "pref": "poco/1.10.1#0:e69413742ba54b4ea95d3337b7049d53c44cc4df#0",
     "options": "cxx_14=False\nenable_apacheconnector=False\nenable_cppparser=False\nenable_crypto=True\nenable_data=True\nenable_data_mysql=False\nenable_data_odbc=False\nenable_data_postgresql=False\nenable_data_sqlite=True\nenable_encodings=True\nenable_json=True\nenable_jwt=True\nenable_mongodb=True\nenable_net=True\nenable_netssl=True\nenable_netssl_win=True\nenable_pagecompiler=False\nenable_pagecompiler_file2page=False\nenable_pdf=False\nenable_pocodoc=False\nenable_redis=True\nenable_sevenzip=False\nenable_tests=False\nenable_util=True\nenable_xml=True\nenable_zip=True\nfPIC=True\nforce_openssl=True\npoco_unbundled=False\nshared=False\nopenssl:386=False\nopenssl:fPIC=True\nopenssl:no_asm=False\nopenssl:no_async=False\nopenssl:no_bf=False\nopenssl:no_cast=False\nopenssl:no_des=False\nopenssl:no_dh=False\nopenssl:no_dsa=False\nopenssl:no_dso=False\nopenssl:no_hmac=False\nopenssl:no_md5=False\nopenssl:no_mdc2=False\nopenssl:no_rc2=False\nopenssl:no_rsa=False\nopenssl:no_sha=False\nopenssl:no_sse2=False\nopenssl:no_threads=False\nopenssl:openssldir=None\nopenssl:shared=False",
     "requires": [
      "2"

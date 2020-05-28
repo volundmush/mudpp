@@ -44,7 +44,7 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/home/volund/.conan/data/poco/1.10.1/_/_/package/718e3034625b2f7f860369aeddd15f4be5aee71e/include"/>
+					<Add directory="/home/volund/.conan/data/poco/1.10.1/_/_/package/e69413742ba54b4ea95d3337b7049d53c44cc4df/include"/>
 					<Add directory="/home/volund/.conan/data/openssl/1.1.1g/_/_/package/6af9cc7cb931c5ad942174fd7838eb655717c709/include"/>
 					<Add directory="/usr/include/c++/9"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
@@ -68,7 +68,7 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/home/volund/.conan/data/poco/1.10.1/_/_/package/718e3034625b2f7f860369aeddd15f4be5aee71e/include"/>
+					<Add directory="/home/volund/.conan/data/poco/1.10.1/_/_/package/e69413742ba54b4ea95d3337b7049d53c44cc4df/include"/>
 					<Add directory="/home/volund/.conan/data/openssl/1.1.1g/_/_/package/6af9cc7cb931c5ad942174fd7838eb655717c709/include"/>
 					<Add directory="/usr/include/c++/9"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>

@@ -1,9 +1,9 @@
 [includedirs]
-/home/volund/.conan/data/poco/1.10.1/_/_/package/718e3034625b2f7f860369aeddd15f4be5aee71e/include
+/home/volund/.conan/data/poco/1.10.1/_/_/package/e69413742ba54b4ea95d3337b7049d53c44cc4df/include
 /home/volund/.conan/data/openssl/1.1.1g/_/_/package/6af9cc7cb931c5ad942174fd7838eb655717c709/include
 
 [libdirs]
-/home/volund/.conan/data/poco/1.10.1/_/_/package/718e3034625b2f7f860369aeddd15f4be5aee71e/lib
+/home/volund/.conan/data/poco/1.10.1/_/_/package/e69413742ba54b4ea95d3337b7049d53c44cc4df/lib
 /home/volund/.conan/data/openssl/1.1.1g/_/_/package/6af9cc7cb931c5ad942174fd7838eb655717c709/lib
 
 [bindirs]
@@ -13,7 +13,7 @@
 
 
 [builddirs]
-/home/volund/.conan/data/poco/1.10.1/_/_/package/718e3034625b2f7f860369aeddd15f4be5aee71e/
+/home/volund/.conan/data/poco/1.10.1/_/_/package/e69413742ba54b4ea95d3337b7049d53c44cc4df/
 /home/volund/.conan/data/openssl/1.1.1g/_/_/package/6af9cc7cb931c5ad942174fd7838eb655717c709/
 
 [libs]
@@ -68,10 +68,10 @@ POCO_STATIC=ON
 
 
 [includedirs_poco]
-/home/volund/.conan/data/poco/1.10.1/_/_/package/718e3034625b2f7f860369aeddd15f4be5aee71e/include
+/home/volund/.conan/data/poco/1.10.1/_/_/package/e69413742ba54b4ea95d3337b7049d53c44cc4df/include
 
 [libdirs_poco]
-/home/volund/.conan/data/poco/1.10.1/_/_/package/718e3034625b2f7f860369aeddd15f4be5aee71e/lib
+/home/volund/.conan/data/poco/1.10.1/_/_/package/e69413742ba54b4ea95d3337b7049d53c44cc4df/lib
 
 [bindirs_poco]
 
@@ -80,7 +80,7 @@ POCO_STATIC=ON
 
 
 [builddirs_poco]
-/home/volund/.conan/data/poco/1.10.1/_/_/package/718e3034625b2f7f860369aeddd15f4be5aee71e/
+/home/volund/.conan/data/poco/1.10.1/_/_/package/e69413742ba54b4ea95d3337b7049d53c44cc4df/
 
 [libs_poco]
 PocoZip
@@ -131,7 +131,7 @@ POCO_STATIC=ON
 
 
 [rootpath_poco]
-/home/volund/.conan/data/poco/1.10.1/_/_/package/718e3034625b2f7f860369aeddd15f4be5aee71e
+/home/volund/.conan/data/poco/1.10.1/_/_/package/e69413742ba54b4ea95d3337b7049d53c44cc4df
 
 [name_poco]
 poco

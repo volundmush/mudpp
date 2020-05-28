@@ -2,7 +2,7 @@
     arch=x86_64
     build_type=Release
     compiler=gcc
-    compiler.libcxx=libstdc++
+    compiler.libcxx=libstdc++11
     compiler.version=9
     os=Linux
 
@@ -17,14 +17,14 @@
     arch_build=x86_64
     build_type=Release
     compiler=gcc
-    compiler.libcxx=libstdc++
+    compiler.libcxx=libstdc++11
     compiler.version=9
     os=Linux
     os_build=Linux
 
 [full_requires]
     openssl/1.1.1g:6af9cc7cb931c5ad942174fd7838eb655717c709
-    poco/1.10.1:718e3034625b2f7f860369aeddd15f4be5aee71e
+    poco/1.10.1:e69413742ba54b4ea95d3337b7049d53c44cc4df
 
 [full_options]
     openssl:386=False

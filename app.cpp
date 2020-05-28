@@ -30,6 +30,7 @@ void GameApplication::defineOptions(Poco::Util::OptionSet &options) {
             Poco::Util::Option("port", "p", "choose telnet port")
             .required(false)
             .repeatable(false)
+            .argument("number", true)
             .validator(new Poco::Util::IntValidator(1,65535))
             );
 
