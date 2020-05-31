@@ -207,6 +207,33 @@ net.cpp.s:
 	$(MAKE) -f CMakeFiles/mudpp.dir/build.make CMakeFiles/mudpp.dir/net.cpp.s
 .PHONY : net.cpp.s
 
+telnet.o: telnet.cpp.o
+
+.PHONY : telnet.o
+
+# target to build an object file
+telnet.cpp.o:
+	$(MAKE) -f CMakeFiles/mudpp.dir/build.make CMakeFiles/mudpp.dir/telnet.cpp.o
+.PHONY : telnet.cpp.o
+
+telnet.i: telnet.cpp.i
+
+.PHONY : telnet.i
+
+# target to preprocess a source file
+telnet.cpp.i:
+	$(MAKE) -f CMakeFiles/mudpp.dir/build.make CMakeFiles/mudpp.dir/telnet.cpp.i
+.PHONY : telnet.cpp.i
+
+telnet.s: telnet.cpp.s
+
+.PHONY : telnet.s
+
+# target to generate assembly for a file
+telnet.cpp.s:
+	$(MAKE) -f CMakeFiles/mudpp.dir/build.make CMakeFiles/mudpp.dir/telnet.cpp.s
+.PHONY : telnet.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -225,6 +252,9 @@ help:
 	@echo "... net.o"
 	@echo "... net.i"
 	@echo "... net.s"
+	@echo "... telnet.o"
+	@echo "... telnet.i"
+	@echo "... telnet.s"
 .PHONY : help
 
 

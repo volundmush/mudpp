@@ -12,5 +12,5 @@ endif()
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
-add_executable(mudpp main.cpp app.cpp app.h net.cpp net.h)
+add_executable(mudpp main.cpp app.cpp app.h net.cpp net.h telnet.cpp telnet.h)
 target_link_libraries(mudpp ${CONAN_LIBS})

@@ -101,6 +101,12 @@
 		<Unit filename="/home/volund/CLionProjects/mudpp/net.h">
 			<Option target="mudpp"/>
 		</Unit>
+		<Unit filename="/home/volund/CLionProjects/mudpp/telnet.cpp">
+			<Option target="mudpp"/>
+		</Unit>
+		<Unit filename="/home/volund/CLionProjects/mudpp/telnet.h">
+			<Option target="mudpp"/>
+		</Unit>
 		<Unit filename="/home/volund/CLionProjects/mudpp/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
