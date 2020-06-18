@@ -45,7 +45,11 @@
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/home/volund/.conan/data/poco/1.10.1/_/_/package/e69413742ba54b4ea95d3337b7049d53c44cc4df/include"/>
+					<Add directory="/home/volund/.conan/data/libuv/1.38.0/_/_/package/6af9cc7cb931c5ad942174fd7838eb655717c709/include"/>
+					<Add directory="/home/volund/.conan/data/boost/1.73.0/_/_/package/020be167c6748e1e82d613b2837bf63074e10744/include"/>
 					<Add directory="/home/volund/.conan/data/openssl/1.1.1g/_/_/package/6af9cc7cb931c5ad942174fd7838eb655717c709/include"/>
+					<Add directory="/home/volund/.conan/data/zlib/1.2.11/_/_/package/6af9cc7cb931c5ad942174fd7838eb655717c709/include"/>
+					<Add directory="/home/volund/.conan/data/bzip2/1.0.8/_/_/package/da606cf731e334010b0bf6e85a2a6f891b9f36b0/include"/>
 					<Add directory="/usr/include/c++/9"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
 					<Add directory="/usr/include/c++/9/backward"/>
@@ -69,7 +73,11 @@
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/home/volund/.conan/data/poco/1.10.1/_/_/package/e69413742ba54b4ea95d3337b7049d53c44cc4df/include"/>
+					<Add directory="/home/volund/.conan/data/libuv/1.38.0/_/_/package/6af9cc7cb931c5ad942174fd7838eb655717c709/include"/>
+					<Add directory="/home/volund/.conan/data/boost/1.73.0/_/_/package/020be167c6748e1e82d613b2837bf63074e10744/include"/>
 					<Add directory="/home/volund/.conan/data/openssl/1.1.1g/_/_/package/6af9cc7cb931c5ad942174fd7838eb655717c709/include"/>
+					<Add directory="/home/volund/.conan/data/zlib/1.2.11/_/_/package/6af9cc7cb931c5ad942174fd7838eb655717c709/include"/>
+					<Add directory="/home/volund/.conan/data/bzip2/1.0.8/_/_/package/da606cf731e334010b0bf6e85a2a6f891b9f36b0/include"/>
 					<Add directory="/usr/include/c++/9"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
 					<Add directory="/usr/include/c++/9/backward"/>
@@ -90,6 +98,12 @@
 			<Option target="mudpp"/>
 		</Unit>
 		<Unit filename="/home/volund/CLionProjects/mudpp/app.h">
+			<Option target="mudpp"/>
+		</Unit>
+		<Unit filename="/home/volund/CLionProjects/mudpp/entity.cpp">
+			<Option target="mudpp"/>
+		</Unit>
+		<Unit filename="/home/volund/CLionProjects/mudpp/entity.h">
 			<Option target="mudpp"/>
 		</Unit>
 		<Unit filename="/home/volund/CLionProjects/mudpp/main.cpp">

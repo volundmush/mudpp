@@ -10,7 +10,7 @@ void mudpp::net::ProtocolHandler::SetNetworkManager(NetworkManager *manager) {
 }
 
 // NETWORK MANAGER SECTION
-mudpp::net::NetworkManager::NetworkManager() {
+mudpp::net::NetworkManager::NetworkManager(boost::asio::io_context &io) : io_con(io) {
     acceptor_epollfd = epoll_create(20);
     connections_epollfd = epoll_create(20);
 }
@@ -28,10 +28,18 @@ void mudpp::net::NetworkManager::RegisterProtocolHandler(std::string addr, Proto
 
 void mudpp::net::NetworkManager::AddListeningServer(std::string name, std::string addr, int port, bool enable_tls, std::string handler_name) {
 
-    auto *server = new ListeningServer(name, addr, port, enable_tls, this->handler_map[handler_name], this);
-    int acceptor = 0;
-    if((acceptor = server->Start())<1) {
+    try {
+        auto ip = boost::asio::ip::address::from_string(addr);
+        auto *server = new ListeningServer(name, ip, port, enable_tls, this->handler_map[handler_name], *this);
+    }
+    catch(boost::system::error_code &ec) {
+        std::cout << "Something done goofed with creating a server!" << std::endl;
+        return;
+    }
+
+    if((server->Start())<1) {
         // Something done goofed here.
+        std::cout << "Something done goofed with binding!" << std::endl;
     }
 
     // Add a slot to Epoll and alert epoll_ctl about the new acceptor.
@@ -134,49 +142,25 @@ void mudpp::net::NetworkManager::ProcessNewInput() {
 
 
 // LISTENING SERVER SECTION
-mudpp::net::ListeningServer::ListeningServer(std::string name, std::string addr, int port, bool tls,
-                                             std::shared_ptr<ProtocolHandler> handler, NetworkManager *manager) {
+mudpp::net::ListeningServer::ListeningServer(std::string name, boost::asio::ip::address ip, int port, bool tls,
+                                             std::shared_ptr<ProtocolHandler> handler, NetworkManager &manager) :
+        manager(manager), ep(ip, port), acc(manager.io_con, ep) {
 
-    this->port = port;
     this->name = name;
-    this->addr = addr;
     this->tls = tls;
     this->handler = handler;
-    this->manager = manager;
-
 }
 
 mudpp::net::ListeningServer::~ListeningServer() {
 
 }
 
-int mudpp::net::ListeningServer::Start() {
-    int new_socket = 0;
-    // socket() will return -1 if there's an error.
-    if((new_socket = socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0)) != -1)
-    {
-        int option = 1;
+void mudpp::net::ListeningServer::Start() {
 
-        if(setsockopt(new_socket, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT | SO_KEEPALIVE, &option,
-                       sizeof(option)) == 0)
-        {
-            sockaddr_in address{};
-            address.sin_family = AF_INET;
-            address.sin_addr.s_addr = inet_addr(this->addr.c_str());
-            address.sin_port = htons(this->port);
+    acc.bind(ep);
+    acc.listen(128);
+    acc.async_accept(std::bind(&ProtocolHandler::Accept, handler, std::placeholders::_1, std::placeholders::_2));
 
-            if(bind(new_socket, (sockaddr *)&address, sizeof(address)) == 0)
-            {
-                if(listen(new_socket, 40) == 0)
-                {
-                    this->acceptor_socket = new_socket;
-                    return new_socket;
-                }
-            }
-        }
-
-    }
-    return -1;
 }
 
 bool mudpp::net::ListeningServer::Stop() {
@@ -201,25 +185,25 @@ void mudpp::net::ListeningServer::Accept(int socket, std::string addr) {
     prot->OnConnect();
 }
 
-mudpp::net::TcpConnection::TcpConnection(int socket, std::string addr) {
+mudpp::net::TcpTransport::TcpTransport(int socket, std::string addr) {
     this->socket = socket;
     this->addr = addr;
 }
 
-mudpp::net::TcpConnection::~TcpConnection() {
+mudpp::net::TcpTransport::~TcpTransport() {
 
 }
 
 
-void mudpp::net::TcpConnection::Send(bytes data) {
+void mudpp::net::TcpTransport::Send(bytes data) {
     write(this->socket, data.data(), data.size());
 }
 
-void mudpp::net::TcpConnection::Receive(bytes data) {
+void mudpp::net::TcpTransport::Receive(bytes data) {
     this->protocol->Receive(data);
 }
 
-void mudpp::net::TcpConnection::ReadFromSocket() {
+void mudpp::net::TcpTransport::ReadFromSocket() {
     // First, let's get how many bytes should be processed.
     int count;
     ioctl(this->socket, FIONREAD, &count);
@@ -229,32 +213,32 @@ void mudpp::net::TcpConnection::ReadFromSocket() {
     this->Receive(in_buffer);
 }
 
-void mudpp::net::TcpConnection::SendToSocket() {
+void mudpp::net::TcpTransport::SendToSocket() {
 
 }
 
-void mudpp::net::TcpConnection::SetProtocol(mudpp::net::Protocol *prot) {
+void mudpp::net::TcpTransport::SetProtocol(mudpp::net::Protocol *prot) {
     this->protocol = std::shared_ptr<Protocol>(prot);
 }
 
-mudpp::net::TlsConnection::TlsConnection(int socket, std::string addr) : TcpConnection(socket, addr) {
+mudpp::net::TlsTransport::TlsTransport(int socket, std::string addr) : TcpTransport(socket, addr) {
 
 }
 
-mudpp::net::TlsConnection::~TlsConnection() {
+mudpp::net::TlsTransport::~TlsTransport() {
 
 }
 
-void mudpp::net::TlsConnection::Send(bytes data) {
-    TcpConnection::Send(data);
+void mudpp::net::TlsTransport::Send(bytes data) {
+    TcpTransport::Send(data);
 }
 
-void mudpp::net::TlsConnection::Receive(bytes data) {
-    TcpConnection::Receive(data);
+void mudpp::net::TlsTransport::Receive(bytes data) {
+    TcpTransport::Receive(data);
 }
 
-mudpp::net::Protocol::Protocol(mudpp::net::TcpConnection *connection) {
-    this->conn = std::shared_ptr<TcpConnection>(connection);
+mudpp::net::Protocol::Protocol(mudpp::net::TcpTransport *connection) {
+    this->conn = std::shared_ptr<TcpTransport>(connection);
 }
 
 mudpp::net::Protocol::~Protocol() {

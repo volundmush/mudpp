@@ -42,10 +42,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /home/volund/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/201.7223.86/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /home/volund/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/201.7846.88/bin/cmake/linux/bin/cmake
 
 # The command to remove a file.
-RM = /home/volund/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/201.7223.86/bin/cmake/linux/bin/cmake -E remove -f
+RM = /home/volund/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/201.7846.88/bin/cmake/linux/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -62,7 +62,7 @@ CMAKE_BINARY_DIR = /home/volund/CLionProjects/mudpp/cmake-build-debug
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/home/volund/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/201.7223.86/bin/cmake/linux/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/home/volund/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/201.7846.88/bin/cmake/linux/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -73,7 +73,7 @@ rebuild_cache/fast: rebuild_cache
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/home/volund/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/201.7223.86/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+	/home/volund/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/201.7846.88/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -152,6 +152,33 @@ app.s: app.cpp.s
 app.cpp.s:
 	$(MAKE) -f CMakeFiles/mudpp.dir/build.make CMakeFiles/mudpp.dir/app.cpp.s
 .PHONY : app.cpp.s
+
+entity.o: entity.cpp.o
+
+.PHONY : entity.o
+
+# target to build an object file
+entity.cpp.o:
+	$(MAKE) -f CMakeFiles/mudpp.dir/build.make CMakeFiles/mudpp.dir/entity.cpp.o
+.PHONY : entity.cpp.o
+
+entity.i: entity.cpp.i
+
+.PHONY : entity.i
+
+# target to preprocess a source file
+entity.cpp.i:
+	$(MAKE) -f CMakeFiles/mudpp.dir/build.make CMakeFiles/mudpp.dir/entity.cpp.i
+.PHONY : entity.cpp.i
+
+entity.s: entity.cpp.s
+
+.PHONY : entity.s
+
+# target to generate assembly for a file
+entity.cpp.s:
+	$(MAKE) -f CMakeFiles/mudpp.dir/build.make CMakeFiles/mudpp.dir/entity.cpp.s
+.PHONY : entity.cpp.s
 
 main.o: main.cpp.o
 
@@ -246,6 +273,9 @@ help:
 	@echo "... app.o"
 	@echo "... app.i"
 	@echo "... app.s"
+	@echo "... entity.o"
+	@echo "... entity.i"
+	@echo "... entity.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
