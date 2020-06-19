@@ -20,112 +20,161 @@
 #include <fcntl.h>
 #include <sys/ioctl.h>
 #include <boost/asio.hpp>
+#include <utility>
 
 namespace mudpp::net {
 
-        typedef std::vector<uint8_t> bytes;
+    typedef std::vector<uint8_t> bytes;
 
-        class ProtocolHandler;
-        class NetworkManager;
-        class Protocol;
-        class GameConnection;
+    class ProtocolFactory;
+    class TransportFactory;
+    class HandlerFactory;
+    class ServerManager;
+    class Server;
+    class Protocol;
+    class Transport;
+    class Handler;
+    class NetworkManager;
+    class Connection;
 
-        class TcpTransport {
+
+    class Transport {
+    public:
+        Transport(Connection& conn);
+        virtual void Send(bytes data);
+        virtual void Receive(bytes data);
+        virtual void OnConnect();
+    private:
+        void ReadFromSocket();
+        void SendToSocket();
+        Connection& _conn;
+    };
+
+    class TransportFactory {
+    public:
+        void SetManager(NetworkManager *manager);
+        virtual Transport* CreateTransport(Connection &conn) = 0;
+    private:
+        NetworkManager* _manager;
+    };
+
+    class TcpTransport : public Transport {
+    public:
+        TcpTransport(Connection& conn);
+    };
+
+    class TlsTransport : public TcpTransport {
+    public:
+        TlsTransport(Connection& conn);
+        void Send(bytes data) override;
+        void Receive(bytes data) override;
+    };
+
+    class TcpTransportFactory : public TransportFactory {
+    public:
+        Transport* CreateTransport(Connection& conn) override;
+    };
+
+    class TlsTransportFactory : public TransportFactory {
+    public:
+        Transport* CreateTransport(Connection& conn) override;
+    };
+
+    class Protocol {
+    public:
+        Protocol(Connection &conn);
+        virtual void Receive(bytes data) = 0;
+        virtual void OnConnect() = 0;
+        virtual void OnDisconnect() = 0;
+        virtual void Send(bytes data) = 0;
+    private:
+        Connection &_conn;
+    };
+
+    class ProtocolFactory {
+    public:
+        virtual Protocol* CreateProtocol(Connection& conn);
+    };
+
+    class Handler {
+    public:
+        Handler(Connection &conn);
+        virtual void OnConnect();
+    private:
+        Connection &_conn;
+    };
+
+    class HandlerFactory {
+    public:
+        virtual Handler* CreateHandler(Connection& conn);
+    };
+
+    class Connection {
         public:
-            TcpTransport(int socket, std::string addr);
-            ~TcpTransport();
-            void ReadFromSocket();
-            void SendToSocket();
-            void SetProtocol(Protocol *prot);
-            virtual void Send(bytes data);
-            virtual void Receive(bytes data);
+            Connection(boost::asio::ip::tcp::socket socket, Server &server, int conn_id);
+            void OnConnect();
+            void OnTransportReady();
+            void OnProtocolReady();
+            void OnHandlerReady();
+            void OnDisconnect();
         private:
-            int socket;
-            std::string addr;
-            std::shared_ptr<Protocol> protocol;
-        };
+            int connection_id;
+            bool is_initialized = false;
+            bool is_tearing_down = false;
+            boost::asio::ip::tcp::socket _socket;
+            Server& _server;
+            std::shared_ptr<Transport> _transport;
+            std::shared_ptr<Handler> _handler;
+            std::shared_ptr<Protocol> _protocol;
+            friend class Protocol;
+            friend class Transport;
+            friend class Handler;
+    };
 
-        class TlsTransport : public TcpTransport {
+    class Server {
         public:
-            TlsTransport(int socket, std::string addr);
-            ~TlsTransport();
-            void Send(bytes data) override;
-            void Receive(bytes data) override;
-        };
-
-        class Protocol {
-        public:
-            explicit Protocol(TcpConnection *connection);
-            ~Protocol();
-            virtual void Receive(bytes data);
-            virtual void OnConnect();
-            void SetGameConnection(GameConnection *gconn);
-            void Send(bytes data);
+            Server(std::string name, boost::asio::ip::tcp::endpoint endpoint, std::shared_ptr<TransportFactory> trans_fac,
+                    std::shared_ptr<ProtocolFactory> prot_fac, std::shared_ptr<HandlerFactory> handler_fac, NetworkManager &manager);
+            void Start();
+            void Stop();
+            void Listen();
+            void Accept(boost::system::error_code& ec, boost::asio::ip::tcp::socket sock);
         private:
-            std::shared_ptr<TcpConnection> conn;
-            std::shared_ptr<GameConnection> gconn;
-        };
+            bool is_listening = false;
+            std::shared_ptr<HandlerFactory> _handler_factory;
+            std::shared_ptr<ProtocolFactory> _protocol_factory;
+            std::shared_ptr<TransportFactory> _transport_factory;
+            boost::asio::ip::tcp::acceptor _acceptor;
+            std::string _name;
+            boost::asio::ip::tcp::endpoint _endpoint;
+            NetworkManager &_manager;
+            std::unordered_map<int, std::shared_ptr<Connection>> connection_map;
+            friend class Connection;
+    };
 
-        class GameConnection {
+    class NetworkManager {
         public:
-            explicit GameConnection(Protocol *prot);
-            ~GameConnection();
+            NetworkManager(boost::asio::io_context &io);
+            void RegisterProtocolFactory(std::string name, ProtocolFactory* factory);
+            void RegisterHandlerFactory(std::string name, HandlerFactory* factory);
+            void RegisterTransportFactory(std::string name, TransportFactory* factory);
+            void CreateServer(std::string name, std::string addr, int port, std::string transport_name,
+                    std::string protocol_name, std::string handler_name);
+            void DeleteServer(std::string name);
+            void StartServer(std::string name);
+            void StopServer(std::string name);
+            void RegisterConnection();
+            int NextId();
         private:
-            std::string address;
-            std::shared_ptr<Protocol> prot;
-        };
-
-        class ProtocolHandler {
-        public:
-            void SetNetworkManager(NetworkManager *manager);
-            virtual Protocol *Accept(boost::system::error_code ec, boost::asio::ip::tcp::socket sock) = 0;
-        private:
-            std::shared_ptr<NetworkManager> manager;
-        };
-
-        class ListeningServer {
-            public:
-                ListeningServer(std::string name, boost::asio::ip::address ip, int port, bool tls,
-                                std::shared_ptr<ProtocolHandler> handler, NetworkManager &manager);
-                ~ListeningServer();
-                boost::system::error_code Start();
-                bool Stop();
-                void Accept(int socket, std::string addr);
-
-            private:
-                std::shared_ptr<ProtocolHandler> handler;
-                boost::asio::ip::tcp::acceptor acc;
-                bool tls;
-                std::string name;
-                boost::asio::ip::tcp::endpoint ep;
-                NetworkManager &manager;
-        };
-
-        class NetworkManager {
-            public:
-                NetworkManager(boost::asio::io_context &io);
-                ~NetworkManager();
-
-                void RegisterProtocolHandler(std::string name, ProtocolHandler *handler);
-                void AddListeningServer(std::string name, std::string addr, int port, bool enable_tls,
-                                        std::string handler_name);
-                void RemoveListeningServer(std::string name);
-                void RegisterConnection(int socket, TcpConnection *conn, GameConnection *gconn);
-                void AcceptNewConnections();
-                void ProcessNewInput();
-                boost::asio::io_context &io_con;
-
-            private:
-
-                std::unordered_map<std::string, std::shared_ptr<ProtocolHandler>> handler_map;
-                std::unordered_map<int, std::shared_ptr<GameConnection>> game_conns;
-                std::unordered_map<int, std::shared_ptr<ListeningServer>> acceptor_map;
-                std::unordered_map<int, std::shared_ptr<TcpConnection>> connection_map;
-                std::unordered_map<std::string, std::shared_ptr<ListeningServer>> server_map;
-                int acceptor_epollfd;
-                int connections_epollfd;
-                std::vector<epoll_event> acceptor_events;
-                std::vector<epoll_event> connection_events;
-        };
-    }
+            int next_conn_id = 0;
+            std::unordered_map<std::string, std::shared_ptr<ProtocolFactory>> protocol_map;
+            std::unordered_map<std::string, std::shared_ptr<HandlerFactory>> handler_map;
+            std::unordered_map<std::string, std::shared_ptr<TransportFactory>> transport_map;
+            std::unordered_map<std::string, std::shared_ptr<Server>> server_map;
+            std::unordered_map<int, std::shared_ptr<Connection>> connection_map;
+            boost::asio::io_context& _io_con;
+            friend class Server;
+            friend class Connection;
+    };
+}
 #endif //MUDPP_NET_H
